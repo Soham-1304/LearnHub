@@ -1,0 +1,254 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register - LearnHub</title>
+    <style>
+        :root {
+            --dark-bg: #111;
+            --mid-bg: #1a1a1a;
+            --accent: #ff9900;
+            --accent-light: #ffa31a;
+            --text-light: #f1f1f1;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            background-color: var(--accent);
+            padding: 10px 30px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 8px rgba(255, 153, 0, 0.3);
+        }
+
+        #name {
+            font-size: 20px;
+            font-weight: bold;
+            flex:1
+        }
+
+        nav p {
+            margin: 0 10px;
+        }
+
+        #navLink {
+            color: white;
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        #navLink:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: var(--mid-bg);
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(255, 153, 0, 0.2);
+        }
+
+        h1 {
+        text-align: center;
+        color: var(--accent);
+        margin-bottom: 30px;
+        }
+
+        fieldset {
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        }
+
+        legend {
+        font-weight: bold;
+        color: var(--accent);
+        padding: 0 10px;
+        }
+
+        label {
+        display: block;
+        margin: 15px 0 5px;
+        }
+
+        input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        background-color: #262626;
+        color: var(--text-light);
+        }
+
+        input:focus, select:focus, textarea:focus {
+        outline: 2px solid var(--accent);
+        }
+
+        button {
+        background-color: var(--accent);
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto 0;
+        }
+
+        button:hover {
+        background-color: var(--accent-light);
+        }
+    </style>
+    </head>
+    <body>
+
+    <nav>
+        <p id="name">LearnHub</p>
+        <p><a id="navLink" href="landing.html">Home</a></p>
+        <p><a id="navLink" href="courses.html">Courses</a></p>
+        <p><a id="navLink" href="register.html">Register</a></p>
+    </nav>
+
+    <div class="container">
+        <h1>Registration Form</h1>
+        <form id="registrationForm" action="landing.html" method="get" novalidate>
+        <fieldset> 
+            <legend>Personal Information</legend>
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" required />
+            <div class="error-message" id="fullnameError"></div>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required />
+            <div class="error-message" id="emailError"></div>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required />
+            <div class="error-message" id="dobError"></div>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required />
+            <div class="error-message" id="phoneError"></div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Education & Course Preferences</legend>
+
+            <label for="course">Preferred Course:</label>
+            <select id="course" name="course" required>
+                <option value="">Choose one</option>
+                <option value="web">Web Development</option>
+                <option value="data">Data Science</option>
+                <option value="ai">Artificial Intelligence</option>
+                <option value="design">UI/UX Design</option>
+            </select>
+            <div class="error-message" id="courseError"></div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Additional Details</legend>
+
+            <label for="comments">Why do you want to join LearnHub?</label>
+            <textarea id="comments" name="comments" rows="4" required></textarea>
+            <div class="error-message" id="commentsError"></div>
+        </fieldset>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        const form = document.getElementById("registrationForm");
+
+        form.addEventListener("submit", function(event) {
+        let valid = true;
+
+        // Helper function to trim and test input
+        const isEmpty = (value) => value.trim() === "";
+
+        // Full name: only letters and spaces, at least 3 chars
+        const fullname = document.getElementById("fullname");
+        const fullnameError = document.getElementById("fullnameError");
+        const namePattern = /^[A-Za-z\s]{3,}$/;
+        if (!namePattern.test(fullname.value.trim())) {
+            fullnameError.textContent = "Please enter at least 3 letters (letters and spaces only).";
+            valid = false;
+        } else {
+            fullnameError.textContent = "";
+        }
+
+        // Email: standard regex
+        const email = document.getElementById("email");
+        const emailError = document.getElementById("emailError");
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email.value.trim())) {
+            emailError.textContent = "Please enter a valid email address.";
+            valid = false;
+        } else {
+            emailError.textContent = "";
+        }
+
+        // DOB: must be in the past
+        const dob = document.getElementById("dob");
+        const dobError = document.getElementById("dobError");
+        const today = new Date().toISOString().split("T")[0];
+        if (!dob.value || dob.value >= today) {
+            dobError.textContent = "Date of birth must be in the past.";
+            valid = false;
+        } else {
+            dobError.textContent = "";
+        }
+
+        // Phone: exactly 10 digits
+        const phone = document.getElementById("phone");
+        const phoneError = document.getElementById("phoneError");
+        const phonePattern = /^\d{10}$/;
+        if (!phonePattern.test(phone.value.trim())) {
+            phoneError.textContent = "Phone number must be exactly 10 digits.";
+            valid = false;
+        } else {
+            phoneError.textContent = "";
+        }
+
+        // Course selection
+        const course = document.getElementById("course");
+        const courseError = document.getElementById("courseError");
+        if (course.value === "") {
+            courseError.textContent = "Please select a course.";
+            valid = false;
+        } else {
+            courseError.textContent = "";
+        }
+
+        // Comments: cannot be empty
+        const comments = document.getElementById("comments");
+        const commentsError = document.getElementById("commentsError");
+        if (isEmpty(comments.value)) {
+            commentsError.textContent = "This field cannot be empty.";
+            valid = false;
+        } else {
+            commentsError.textContent = "";
+        }
+
+        if (!valid) {
+            event.preventDefault(); // Prevent form submission if any field is invalid
+        }
+        });
+    </script>
+
+    </body>
+    </html>
